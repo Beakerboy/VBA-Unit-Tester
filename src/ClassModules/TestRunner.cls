@@ -9,14 +9,26 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 ' Function: TestAll
 ' Given a TestCase object, run all of its tests
-Public Function TestAll(clsObj)
+Public Function TestAll(ByVal clsObj As iTestCase)
     Result = True
     ' get the list of all test methods
     List = clsObj.GetAllTests()
+    Dim parObj As Object
+    Set parObj = clsObj.GetObject()
     For Each Method In List
-        Result = Result And RunTest(clsObj, Method)
+        Result = Result And RunTest(parObj, Method)
     Next Method
     TestAll = Result
+End Function
+
+' Function: TestAllClasses
+' Given an array of TestCase objects, run all of their tests
+Public Function TestAllClasses(clsArr)
+    Result = True
+    For Each clsObj In clsArr
+        Result = Result And TestAll(clsObj)
+    Next clsObj
+    TestAllClasses = Result
 End Function
 
 ' Function: RunTest
