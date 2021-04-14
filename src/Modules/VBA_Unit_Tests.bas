@@ -12,6 +12,19 @@ Function RunAllModuleTests(Module_name, Optional Output = "MsgBox")
   RunAllModuleTests = Application.Run(Module_name & "_RunAllTests")
 End Function
 
+' Function: RunTestList
+' Given an array of module names, run them all and return tru if they all pass
+'
+' Parameters:
+'   TestList - Array of modules to test
+Function RunTestList(TestList)
+    Result = True
+    For Each Module In TestList
+        Result = Result And RunAllModuleTests(Module)
+    Next Module
+    RunTestList = Result
+End Function
+
 ' Sub: AssertTrue
 ' Assert that the provided parameter is true
 '
