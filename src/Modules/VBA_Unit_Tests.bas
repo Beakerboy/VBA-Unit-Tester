@@ -1,3 +1,15 @@
+' Function: RunAllModuleTests
+' Run all the defined tests for a given module
+'
+' Parameters:
+'   Module_name - The name of the module
+'
+' Returns:
+'   True if all tests pass
+Function RunAllModuleTests(Module_name)
+  RunAllModuleTests = Application.Run(Module_name & "_RunAllTests")
+End Function
+
 ' Sub: AssertTrue
 ' Assert that the provided parameter is true
 '
