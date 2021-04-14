@@ -12,3 +12,12 @@ Attribute VB_Exposed = True
 Public Sub Setup()
 
 End Sub
+
+' Function: GetAllTests
+' Get a list of all functions in the class that perfom an assertion
+'
+' Returns:
+'   An array of function names as strings.
+Public Function GetAllTests()
+
+End Function
