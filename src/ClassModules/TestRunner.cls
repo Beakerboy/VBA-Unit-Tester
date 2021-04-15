@@ -5,10 +5,17 @@ END
 Attribute VB_Name = "TestRunner"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
-Attribute VB_PredeclaredId = False
+Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = True
+' Count of passing function calls
 Dim Passing As Integer
+
+'Count of failing function calls
 Dim Failing As Integer
+
+
+' A list of any messages returned from the assertions
+'Dim Messages as Collection
 
 ' Constructor: Class_Initialize
 ' Initialize class members
@@ -56,5 +63,11 @@ End Function
 
 Public Sub ResultsMsgBox()
     Total = Passing + Failing
-    MsgBox "Results" & vbNewLine & "Total Run: " & Total & vbNewLine & "Passing: " & Passing & vbNewLine & "Failing: " & Failing
+    MsgBox "Results" & vbNewLine & "Total Run: " & Total & vbNewLine & "Passing: " & Passing & vbNewLine & "Failing: " & Failing & vbNewLine & "Assertions: " & IncrementAssertions(0)
 End Sub
+
+Public Function IncrementAssertions(Optional Intval = 1)
+    Static Assertions As Integer
+    Assertions = Assertions + Intval
+    IncrementAssertions = Assertions
+End Function
