@@ -1,29 +1,5 @@
+Attribute VB_Name = "VBA_Assertions"
 Dim OutputType As Variant
-' Function: RunAllModuleTests
-' Run all the defined tests for a given module
-'
-' Parameters:
-'   Module_name - The name of the module
-'
-' Returns:
-'   True if all tests pass
-Function RunAllModuleTests(Module_name, Optional Output = "MsgBox")
-  OutputType = Output
-  RunAllModuleTests = Application.Run(Module_name & "_RunAllTests")
-End Function
-
-' Function: RunTestList
-' Given an array of module names, run them all and return tru if they all pass
-'
-' Parameters:
-'   TestList - Array of modules to test
-Function RunTestList(TestList)
-    Result = True
-    For Each Module In TestList
-        Result = Result And RunAllModuleTests(Module)
-    Next Module
-    RunTestList = Result
-End Function
 
 ' Sub: AssertTrue
 ' Assert that the provided parameter is true
@@ -31,6 +7,7 @@ End Function
 ' Parameters:
 '   MyTest - The parameter under test
 Function AssertTrue(MyTest, Optional MessageString As String = "", Optional Output = 1)
+    TestRunner.IncrementAssertions
     Old_Output = OutputType
     If Output <> 1 Then
         OutputType = Output
