@@ -16,13 +16,9 @@ Setup
 
 Open Microsoft Visual Basic For Applications and import each cls and bas into a new project. Name the project VBAUnitTester and save it as an xlam file. Enable the addin. Within Microsoft Visual Basic For Applications, select Tools>References and ensure that VBAUnitTester is selected.
 
-Running Tests
------
-If the module to test has been correctly configured, type "=RunAllModuleTests(_module_name_)" in cell A1 to run all the tests for a particular module.
-
 Setting up a module to be tested
 -----
-Create a module and create a function called {_module_name_}\_RunAllTests(). Place all the test code, or calls to every test within this function.
+In you VBA project, you will need to create one class module that implements the iTestableProject interface and at least one class that implements the iTestCase interface. Each TestCase must contain at least one test function, each of which should contain at least one assertion.
 
 Assertions
 -----
