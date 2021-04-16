@@ -24,6 +24,7 @@ Create a module with a function that calls the TestRunner with the desired optio
 
  Usage
 -----
+## Classes
 
 ### TestRunner
 A class that manages running the specified tests:
@@ -36,6 +37,15 @@ MyTestConfig.Run()
 ```
 ### TestReporter
 A static (singleton) class that records which tests have run, and the results.
+
+## Interfaces
+
+### iTestCase
+A Test Case is a collection of tests, each of which share a common set up.
+
+### iTestableProject
+A TestableProject is the set of instructions on how to execute testing and reporting. 
+
 
 Assertions
 -----
