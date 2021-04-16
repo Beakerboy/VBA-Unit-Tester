@@ -11,13 +11,14 @@ Dim oTestConfig As iTestableProject
 
 Property Set TestConfig(oConfig As iTestableProject)
     Set oTestConfig = oConfig
+    TestReporter.OutputFailure = oConfig.GetOutputFailures
 End Property
 
 
 ' Constructor: Class_Initialize
 ' Initialize class members
 Private Sub Class_Initialize()
-   
+   TestReporter.ResetCounters
 End Sub
 
 ' Function: TestCase
@@ -54,9 +55,3 @@ Public Sub RunTest(clsObj, Test)
     TestReporter.LogTest TypeName(clsObj), Test
     Call CallByName(clsObj, Test, VbMethod)
 End Sub
-
-' Sub: RunTestByName
-' Run a specifc test within a specified TestCase.
-Public Function RunTestByName(clsName As String, Test As String)
-
-End Function
