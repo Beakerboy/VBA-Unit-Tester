@@ -6,14 +6,14 @@ Dim OutputType As Variant
 '
 ' Parameters:
 '   MyTest - The parameter under test
-Function AssertTrue(MyTest, Optional MessageString As String = "")
-    TestReporter.LogAssertion
+Function AssertTrue(MyTest, Optional MessageString As String = "", Optional Logging = True)
+    If Logging Then TestReporter.LogAssertion
     AssertTrue = True
     If Not MyTest Then
         If MessageString = "" Then
             MessageString = "Expected: TRUE" & vbNewLine & "Provided: " & MyTest
         End If
-        TestReporter.LogFailure MessageString
+        If Logging Then TestReporter.LogFailure MessageString
         AssertTrue = False
     Else
         'TestReporter.LogSuccess
@@ -25,11 +25,11 @@ End Function
 '
 ' Parameters:
 '   MyTest - The parameter under test
-Function AssertFalse(MyTest, Optional MessageString As String = "")
+Function AssertFalse(MyTest, Optional MessageString As String = "", Optional Logging = True)
     If MessageString = "" Then
         MessageString = "Expected: FALSE" & vbNewLine & "Provided: " & MyTest
     End If
-    AssertFalse = AssertTrue(Not MyTest, MessageString)
+    AssertFalse = AssertTrue(Not MyTest, MessageString, Logging)
 End Function
 
 ' Sub: AssertEquals
@@ -39,11 +39,33 @@ End Function
 '   MyTest        - The parameter under test
 '   ExpectedValue - The expected value of MyTest
 '
-Function AssertEquals(MyTest, ExpectedValue, Optional MessageString As String = "")
+Function AssertEquals(MyTest, ExpectedValue, Optional MessageString As String = "", Optional Logging = True)
     If MessageString = "" Then
         MessageString = "Expected: " & ExpectedValue & vbNewLine & "Provided: " & MyTest
     End If
-    AssertEquals = AssertTrue(MyTest = ExpectedValue, MessageString)
+    AssertEquals = AssertTrue(MyTest = ExpectedValue, MessageString, Logging)
+End Function
+
+' Sub: AssertArrayEquals
+' Assert that two arrays have the same dimensions and values
+'
+' Parameters:
+'   MyTest        - The parameter under test
+'   ExpectedValue - The expected value of MyTest
+'
+Function AssertArrayEquals(MyTest, ExpectedValue, Optional MessageString As String = "", Optional Logging = True)
+    AssertArrayEquals = True
+    ' Check the number of dimensions of MyTest, verify the same in Expected
+    ' Iterate each dimension. If it's an atomic value, measure equality. If it's an array, continue iterating.
+    
+    If MessageString = "" Then
+        MessageString = "Expected: " & ExpectedValue & vbNewLine & "Provided: " & MyTest
+    End If
+    AssertEquals = AssertTrue(MyTest = ExpectedValue, MessageString, Logging)
+End Function
+
+Private Function getArrayRank(aVar)
+
 End Function
 
 ' Sub: AssertNotEquals
@@ -53,11 +75,11 @@ End Function
 '   MyTest          - The parameter under test
 '   UnexpectedValue - The unexpected value of MyTest
 '
-Function AssertNotEquals(MyTest, UnexpectedValue, Optional MessageString As String = "")
+Function AssertNotEquals(MyTest, UnexpectedValue, Optional MessageString As String = "", Optional Logging = True)
     If MessageString = "" Then
         MessageString = "Expected any value other than: " & MyTest
     End If
-    AssertNotEquals = AssertTrue(MyTest <> UnexpectedValue, MessageString)
+    AssertNotEquals = AssertTrue(MyTest <> UnexpectedValue, MessageString, Logging)
 End Function
 
 ' Function: AssertObjectStringEquals
@@ -67,11 +89,11 @@ End Function
 '   MyTest        - The object under test
 '   ExpectedValue - The expected value of MyTest.toString
 '
-Function AssertObjectStringEquals(MyObject, ExpectedValue, Optional MessageString As String = "")
+Function AssertObjectStringEquals(MyObject, ExpectedValue, Optional MessageString As String = "", Optional Logging = True)
     ObjectString = MyObject.toString
     If MessageString = "" Then
         ObjectString = MyObject.toString
         MessageString = "Expected: " & ExpectedValue & vbNewLine & "Provided: " & ObjectString
     End If
-    AssertObjectStringEquals = AssertTrue(ObjectString = ExpectedValue, MessageString)
+    AssertObjectStringEquals = AssertTrue(ObjectString = ExpectedValue, MessageString, Logging)
 End Function
