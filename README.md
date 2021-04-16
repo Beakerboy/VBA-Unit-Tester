@@ -36,7 +36,7 @@ A class that manages running the specified tests:
 
 Tests can be executed at three different levels:
  * RunTest (iTestCase, Method) - Executes one test in one TestCase
- * TestCase(iTestCase) - Executes all tests in a supplies TestCase
+ * TestCase(iTestCase) - Executes all tests in a supplied TestCase
  * TestAllCases - Requests a list of all TestCase classes and executes all tests in each
 
 ### TestReporter
