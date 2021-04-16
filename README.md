@@ -55,8 +55,13 @@ A TestableProject is the set of instructions on how to execute testing and repor
 Assertions
 -----
 This library contains several assertion functions. These differ from the native Debug.Assert in that they will run any time, not only while in debug mode. Next, they do not halt execution. Instead a record is made of the number of passes and failures, and reports can be generated.
-AssertTrue()
-AssertFalse()
-AssertEquals()
-AssertNotEquals()
-AssertObjectStringEquals() - Attempts to call a method named .ToString() and compares the results to the provided string.
+ * AssertTrue() - Verify that the provided parameter is a boolean True value.
+ * AssertFalse() - Verify that the provided parameter is a boolean False value.
+ * AssertEquals() - Verify that parameters equal one another. They may have a different type. 
+       - TODO: Match arrays. How to handle objects? introspection on public properties?
+ * AssertNotEquals()
+ * AssertObjectStringEquals() - Attempts to call a method named .ToString() and compares the results to the provided string.
+
+To Be Implemented
+ * AssertSame() - Assert that the parameters match value and type. Objects are the same instances.
+ * 
