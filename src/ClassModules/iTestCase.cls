@@ -21,3 +21,7 @@ End Sub
 Public Function GetAllTests()
 
 End Function
+
+Public Function GetObject()
+
+End Function
