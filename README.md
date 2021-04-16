@@ -14,7 +14,7 @@ Features
 Setup
 -----
 
-Open Microsoft Visual Basic For Applications and import each cls and bas from the sta directory into a new project. Name the project VBAUnitTester and save it as an xlam file. Enable the addin.
+Open Microsoft Visual Basic For Applications and import each cls and bas from the src directory into a new project. Name the project VBAUnitTester and save it as an xlam file. Enable the addin.
 
 Setting up a module to be tested
 -----
