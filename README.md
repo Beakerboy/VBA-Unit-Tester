@@ -3,12 +3,12 @@ VBA Unit Tester
 
 ### Test your VBA code with VBA
 
-Easily create Unit tests and execute them within VBA
+Easily create Unit tests, execute them, and see reports, all within VBA.
 
 Features
 --------
- * [Standard Formatting](#format)
- * [Test Execution](#execution)
+ * [Setting up the software](#Setup)
+ * [Using the library](#usage)
  * [Assertions](#assertions)
  
 Setup
