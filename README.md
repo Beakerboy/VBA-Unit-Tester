@@ -26,7 +26,7 @@ Create a module with a function that calls the TestRunner with the desired optio
 -----
 
 ### TestRunner
-A static (singleton) class that manages running the specified tests:
+A class that manages running the specified tests:
 ```vb
 Dim MyTestConfig As iTestableProject
 Set MyTestConfig = New {projectClass}
@@ -34,6 +34,8 @@ Set MyTestConfig = New {projectClass}
 MyTestConfig.Run()
 
 ```
+### TestReporter
+A static (singleton) class that records which tests have run, and the results.
 
 Assertions
 -----
