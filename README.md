@@ -22,6 +22,19 @@ In your VBA project, you will need to create one class module that implements th
 Within Microsoft Visual Basic For Applications, select Tools>References and ensure that VBAUnitTester is selected.
 Create a module with a function that calls the TestRunner with the desired options and run this macro.
 
+ Usage
+-----
+
+### TestRunner
+A static (singleton) class that manages running the specified tests:
+```vb
+Dim MyTestConfig As iTestableProject
+Set MyTestConfig = New {projectClass}
+
+MyTestConfig.Run()
+
+```
+
 Assertions
 -----
 This library contains several assertion functions. These differ from the native Debug.Assert in that they will run any time, not only while in debug mode. Next, they do not halt execution. Instead a record is made of the number of passes and failures, and reports can be generated.
