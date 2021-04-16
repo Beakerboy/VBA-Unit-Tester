@@ -6,23 +6,18 @@ Dim OutputType As Variant
 '
 ' Parameters:
 '   MyTest - The parameter under test
-Function AssertTrue(MyTest, Optional MessageString As String = "", Optional Output = 1)
-    TestRunner.IncrementAssertions
-    Old_Output = OutputType
-    If Output <> 1 Then
-        OutputType = Output
-    End If
+Function AssertTrue(MyTest, Optional MessageString As String = "")
+    TestReporter.LogAssertion
     AssertTrue = True
     If Not MyTest Then
         If MessageString = "" Then
             MessageString = "Expected: TRUE" & vbNewLine & "Provided: " & MyTest
         End If
-        If OutputType = "MsgBox" Then
-            MsgBox MessageString
-        End If
+        TestReporter.LogFailure MessageString
         AssertTrue = False
+    Else
+        'TestReporter.LogSuccess
     End If
-    OutputType = Old_Output
 End Function
 
 ' Sub: AssertFalse
@@ -30,11 +25,11 @@ End Function
 '
 ' Parameters:
 '   MyTest - The parameter under test
-Function AssertFalse(MyTest, Optional MessageString As String = "", Optional Output = 1)
+Function AssertFalse(MyTest, Optional MessageString As String = "")
     If MessageString = "" Then
         MessageString = "Expected: FALSE" & vbNewLine & "Provided: " & MyTest
     End If
-    AssertFalse = AssertTrue(Not MyTest, MessageString, Output)
+    AssertFalse = AssertTrue(Not MyTest, MessageString)
 End Function
 
 ' Sub: AssertEquals
@@ -44,11 +39,11 @@ End Function
 '   MyTest        - The parameter under test
 '   ExpectedValue - The expected value of MyTest
 '
-Function AssertEquals(MyTest, ExpectedValue, Optional MessageString As String = "", Optional Output = 1)
+Function AssertEquals(MyTest, ExpectedValue, Optional MessageString As String = "")
     If MessageString = "" Then
         MessageString = "Expected: " & ExpectedValue & vbNewLine & "Provided: " & MyTest
     End If
-    AssertEquals = AssertTrue(MyTest = ExpectedValue, MessageString, Output)
+    AssertEquals = AssertTrue(MyTest = ExpectedValue, MessageString)
 End Function
 
 ' Sub: AssertNotEquals
@@ -58,11 +53,11 @@ End Function
 '   MyTest          - The parameter under test
 '   UnexpectedValue - The unexpected value of MyTest
 '
-Function AssertNotEquals(MyTest, UnexpectedValue, Optional MessageString As String = "", Optional Output = 1)
+Function AssertNotEquals(MyTest, UnexpectedValue, Optional MessageString As String = "")
     If MessageString = "" Then
         MessageString = "Expected any value other than: " & MyTest
     End If
-    AssertNotEquals = AssertTrue(MyTest <> UnexpectedValue, MessageString, Output)
+    AssertNotEquals = AssertTrue(MyTest <> UnexpectedValue, MessageString)
 End Function
 
 ' Function: AssertObjectStringEquals
@@ -72,11 +67,11 @@ End Function
 '   MyTest        - The object under test
 '   ExpectedValue - The expected value of MyTest.toString
 '
-Function AssertObjectStringEquals(MyObject, ExpectedValue, Optional MessageString As String = "", Optional Output = 1)
+Function AssertObjectStringEquals(MyObject, ExpectedValue, Optional MessageString As String = "")
     ObjectString = MyObject.toString
     If MessageString = "" Then
         ObjectString = MyObject.toString
         MessageString = "Expected: " & ExpectedValue & vbNewLine & "Provided: " & ObjectString
     End If
-    AssertObjectStringEquals = AssertTrue(ObjectString = ExpectedValue, MessageString, Output)
+    AssertObjectStringEquals = AssertTrue(ObjectString = ExpectedValue, MessageString)
 End Function
