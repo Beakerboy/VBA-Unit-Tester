@@ -33,8 +33,12 @@ Dim MyTestConfig As iTestableProject
 Set MyTestConfig = New {projectClass}
 
 MyTestConfig.Run()
-
 ```
+Test can be ordered at three different levels:
+ * RunTest (iTestCase, Method) - Executes one test in one TestCase
+ * TestCase(iTestCase) - Executes all tests in a supplies TestCase
+ * TestAllCases - Requests a list of all TestCase classes and executes all tests in each
+
 ### TestReporter
 A static (singleton) class that records which tests have run, and the results.
 
