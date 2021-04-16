@@ -84,7 +84,7 @@ Public Sub LogTest(TestCase, TestName)
         ' Write everything to the collection and clear the counts from the previous test
         colLog.Add Array(sTestCase, sTest, PassFail, sMessage)
     End If
-    If TestCase <> sTestCase Then
+    If TestCase <> sTestCase And sTestCase <> "" Then
         If FailingTests = 0 Then
             Passing = Passing + 1
         Else
