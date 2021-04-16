@@ -18,9 +18,14 @@ Open Microsoft Visual Basic For Applications and import each cls and bas into a 
 
 Setting up a module to be tested
 -----
-In your VBA project, you will need to create one class module that implements the iTestableProject interface and at least one class that implements the iTestCase interface. Each TestCase must contain at least one test function, each of which should contain at least one assertion. Information on the format of each class is provided in their section of this guide.
+This project is used to test itself. Refer to the testing directory to see a working example.
+In your VBA project, you will need to create one class module that implements the iTestableProject interface and at least one class that implements the iTestCase interface. Each TestCase should contain at least one test function, each of which should contain at least one assertion. Information on the format of each class is provided in their section of this guide.
 Within Microsoft Visual Basic For Applications, select Tools>References and ensure that VBAUnitTester is selected.
-Create a module with a function that calls the TestRunner with the desired options and run this macro.
+Create a module with a publicly visible function that calls the TestRunner with the desired options and run this macro.
+
+Projects that use this code
+-----
+ * [VBA-SQL-Library](https://github.com/Beakerboy/VBA-SQL-Library)
 
  Usage
 -----
@@ -28,13 +33,8 @@ Create a module with a function that calls the TestRunner with the desired optio
 
 ### TestRunner
 A class that manages running the specified tests:
-```vb
-Dim MyTestConfig As iTestableProject
-Set MyTestConfig = New {projectClass}
 
-MyTestConfig.Run()
-```
-Test can be executed at three different levels:
+Tests can be executed at three different levels:
  * RunTest (iTestCase, Method) - Executes one test in one TestCase
  * TestCase(iTestCase) - Executes all tests in a supplies TestCase
  * TestAllCases - Requests a list of all TestCase classes and executes all tests in each
@@ -43,6 +43,7 @@ Test can be executed at three different levels:
 A static (singleton) class that records which tests have run, and the results.
 
 ## Interfaces
+These interfaces must be implemented by users who with to use this project to test their code.
 
 ### iTestCase
 A Test Case is a collection of tests, each of which share a common set up.
