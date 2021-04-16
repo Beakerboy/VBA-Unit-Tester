@@ -22,31 +22,36 @@ Function iTestCase_GetObject()
 End Function
 
 Sub AssertTrueTest()
-    ' Test that assertions evaluate to True appropriately
-    AssertTrue True, "Expecting True when AssertTrue is given True"
+    Dim Foo As Variant
+    Foo = AssertTrue(AssertTrue(True, "", False), "Expecting True when AssertTrue is given True")
 End Sub
 
 Sub AssertFalseTest()
-    AssertFalse False, "Expecting True when AssertFalse is given False"
+    Dim Foo As Variant
+    Foo = AssertTrue(AssertFalse(False, "", False), "Expecting True when AssertFalse is given False")
 End Sub
 
 Sub AssertIntEqualsTest()
-    AssertEquals 1, 1, "Expecting True when AssertEquals is given equal integers"
+    Dim Foo As Variant
+    Foo = AssertTrue(AssertEquals(1, 1, "", False), "Expecting True when AssertEquals is given equal integers")
 End Sub
 
 Sub AssertStringEqualsTest()
-    AssertEquals "one", "one", "Expecting True when AssertEquals is given equal strings"
+    Dim Foo As Variant
+    Foo = AssertTrue(AssertEquals("one", "one", "", False), "Expecting True when AssertEquals is given equal strings")
 End Sub
 
 Sub AssertFloatEqualsTest()
-    AssertEquals 1.15, 1.15, "Expecting True when AssertEquals is given equal floats"
+    Dim Foo As Variant
+    Foo = AssertTrue(AssertEquals(1.15, 1.15, "", False), "Expecting True when AssertEquals is given equal floats")
 End Sub
 
 Sub AssertIntNotEqualsTest()
-    AssertNotEquals 1, 2, "Expecting True when AssertNotEquals is given unequal integers"
+    Dim Foo As Variant
+    Foo = AssertTrue(AssertNotEquals(1, 2, "", False), "Expecting True when AssertNotEquals is given unequal integers")
 End Sub
 
 Sub AssertStringNotEqualsTest()
-    AssertNotEquals "one", "One", "Expecting True when AssertNotEquals is given unequal strings"
+    Dim Foo As Variant
+    Foo = AssertTrue(AssertNotEquals("one", "One", "", False), "Expecting True when AssertNotEquals is given unequal strings")
 End Sub
-
