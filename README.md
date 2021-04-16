@@ -43,7 +43,7 @@ Tests can be executed at three different levels:
 A static (singleton) class that records which tests have run, and the results.
 
 ## Interfaces
-These interfaces must be implemented by users who with to use this project to test their code.
+These interfaces must be implemented by users who wish to use this project to test their code.
 
 ### iTestCase
 A Test Case is a collection of tests, each of which share a common set up. The examples directory has a stub version of this class which can be used as a starting point.
