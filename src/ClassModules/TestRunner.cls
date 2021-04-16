@@ -5,69 +5,58 @@ END
 Attribute VB_Name = "TestRunner"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
-Attribute VB_PredeclaredId = True
+Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
-' Count of passing function calls
-Dim Passing As Integer
+Dim oTestConfig As iTestableProject
 
-'Count of failing function calls
-Dim Failing As Integer
+Property Set TestConfig(oConfig As iTestableProject)
+    Set oTestConfig = oConfig
+End Property
 
-
-' A list of any messages returned from the assertions
-'Dim Messages as Collection
 
 ' Constructor: Class_Initialize
 ' Initialize class members
 Private Sub Class_Initialize()
-    Passing = 0
-    Failing = 0
+   
 End Sub
 
-' Function: TestAll
+' Function: TestCase
 ' Given a TestCase object, run all of its tests
-Public Function TestAll(ByVal clsObj As iTestCase)
-    Result = True
+Public Sub TestCase(ByVal clsObj As iTestCase)
     ' get the list of all test methods
     List = clsObj.GetAllTests()
     Dim parObj As Object
+    Dim Method As Variant
     Set parObj = clsObj.GetObject()
-    For Each Method In List
-        TestResult = RunTest(parObj, Method)
-        If TestResult Then
-            Passing = Passing + 1
-        Else
-            Failing = Failing + 1
-        End If
-        Result = Result And TestResult
-    Next Method
-    TestAll = Result
-End Function
 
-' Function: TestAllClasses
+    For Each Method In List
+        ' Run the test
+        RunTest parObj, Method
+    Next Method
+End Sub
+
+' Function: TestAllCases
 ' Given an array of TestCase objects, run all of their tests
-Public Function TestAllClasses(clsArr)
-    Result = True
+Public Sub TestAllCases()
+    clsArr = oTestConfig.getTestCases
+    Dim clsObj As Variant
+
     For Each clsObj In clsArr
-        Result = Result And TestAll(clsObj)
+        TestCase clsObj
     Next clsObj
-    TestAllClasses = Result
-End Function
+End Sub
 
 ' Function: RunTest
 ' Run a test
-Public Function RunTest(clsObj, Test)
+Public Sub RunTest(clsObj, Test)
     CallByName clsObj, "iTestCase_Setup", VbMethod
-    RunTest = CallByName(clsObj, Test, VbMethod)
-End Function
-
-Public Sub ResultsMsgBox()
-    Total = Passing + Failing
-    MsgBox "Results" & vbNewLine & "Total Run: " & Total & vbNewLine & "Passing: " & Passing & vbNewLine & "Failing: " & Failing & vbNewLine & "Assertions: " & IncrementAssertions(0)
+    ' Tell the logger what test we are running
+    TestReporter.LogTest TypeName(clsObj), Test
+    Call CallByName(clsObj, Test, VbMethod)
 End Sub
 
-Public Function IncrementAssertions(Optional Intval = 1)
-    Static Assertions As Integer
-    Assertions = Assertions + Intval
-    IncrementAssertions = Assertions
+' Sub: RunTestByName
+' Run a specifc test within a specified TestCase.
+Public Function RunTestByName(clsName As String, Test As String)
+
 End Function
