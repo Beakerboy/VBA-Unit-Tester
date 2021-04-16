@@ -29,7 +29,12 @@ Dim sMessage As String
 Dim sTestCase As String
 Dim sTest As String
 
+Dim bOutputFailures As Boolean
 Dim PassFail As String
+
+Public Property Let OutputFailure(OutputFailures As Boolean)
+    bOutputFailures = OutputFailures
+End Property
 
 ' Constructor: Class_Initialize
 ' Initialize class members
@@ -60,6 +65,9 @@ Public Sub LogFailure(Optional Message = "")
     TotalFailingTests = TotalFailingTests + 1
     sMessage = Message
     PassFail = "Failing"
+    If bOutputFailures Then
+        MsgBox sTestCase & vbNewLine & sTest & vbNewLine & sMessage
+    End If
 End Sub
 
 Public Sub ResetCounters()
