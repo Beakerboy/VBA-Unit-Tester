@@ -13,6 +13,10 @@ Public Sub Setup()
 
 End Sub
 
+Public Sub TearDown()
+
+End Sub
+
 ' Function: GetAllTests
 ' Get a list of all functions in the class that perfom an assertion
 '
