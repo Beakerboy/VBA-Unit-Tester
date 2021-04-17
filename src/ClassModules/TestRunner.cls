@@ -54,4 +54,5 @@ Public Sub RunTest(clsObj, Test)
     ' Tell the logger what test we are running
     TestReporter.LogTest TypeName(clsObj), Test
     Call CallByName(clsObj, Test, VbMethod)
+    CallByName clsObj, "iTestCase_TearDown", VbMethod
 End Sub
