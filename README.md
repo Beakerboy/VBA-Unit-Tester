@@ -48,6 +48,11 @@ These interfaces must be implemented by users who wish to use this project to te
 ### iTestCase
 A Test Case is a collection of tests, each of which share a common set up. The examples directory has a stub version of this class which can be used as a starting point.
 
+ * SetUp() - This function is run before every test in this test case.
+ * TearDown() - This function is run after every test in the test case. 
+       - TODO: Match arrays. How to handle objects? introspection on public properties?
+ * GetTests()
+
 ### iTestableProject
 A TestableProject is the set of instructions on how to execute testing and reporting. The examples directory has a stub file than be quickly edited as a starting point.
 
