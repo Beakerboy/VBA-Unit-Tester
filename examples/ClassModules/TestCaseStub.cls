@@ -15,6 +15,10 @@ Sub iTestCase_Setup()
 
 End Sub
 
+Sub iTestCase_TearDown()
+
+End Sub
+
 Function iTestCase_GetAllTests()
     iTestCase_GetAllTests = Array("MyFirstTest")
 End Function
