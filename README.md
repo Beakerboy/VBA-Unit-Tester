@@ -46,12 +46,26 @@ A static (singleton) class that records which tests have run, and the results.
 These interfaces must be implemented by users who wish to use this project to test their code.
 
 ### iTestCase
-A Test Case is a collection of tests, each of which share a common set up. The examples directory has a stub version of this class which can be used as a starting point.
+A Test Case is a collection of tests, each of which share a common set up. The examples directory has a stub version of this class which can be used as a starting point. All tests should end with the string "Test"
 
  * SetUp() - This function is run before every test in this test case.
  * TearDown() - This function is run after every test in the test case. 
        - TODO: Match arrays. How to handle objects? introspection on public properties?
- * GetTests()
+ * GetTests() - An array of the names of every test in the test case
+
+There are two types of tests that can be written. A basic test runs without any input parameteres. If you wish to run a test multiple times with different parameters, indicate this by ensuring the function name ends with "ProviderTest", and create another function with the same name and append "\_Data" to it.
+For example:
+```vba
+Sub MathProviderTest(Inputs, Expected, Message As String)
+    Call AssertEquals(Inputs(0) + Inputs(1), Expected, Message)
+End Sub
+
+Function MathProviderTest_Data()
+    MathProviderTest_Data = Array( _
+        Array(Array(1, 1), 2, "1+1 Works"), _
+        Array(Array(2, 2), 4, "2+2 Works") _
+    )
+```
 
 ### iTestableProject
 A TestableProject is the set of instructions on how to execute testing and reporting. The examples directory has a stub file than be quickly edited as a starting point.
