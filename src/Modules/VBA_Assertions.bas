@@ -82,6 +82,21 @@ Function AssertNotEquals(MyTest, UnexpectedValue, Optional MessageString As Stri
     AssertNotEquals = AssertTrue(MyTest <> UnexpectedValue, MessageString, Logging)
 End Function
 
+' Sub: AssertSame
+' Assert that two variables have the same value and Type
+'
+' Parameters:
+'   MyTest        - The parameter under test
+'   ExpectedValue - The expected value of MyTest
+'
+Function AssertSame(MyTest, ExpectedValue, Optional MessageString As String = "", Optional Logging = True)
+    If MessageString = "" Then
+        MessageString = "Expected: " & ExpectedValue & vbNewLine & "Provided: " & MyTest
+    End If
+    bBool = MyTest = ExpectedValue And TypeName(MyTest) = TypeName(ExpectedValue)
+    AssertSame = AssertTrue(bBool, MessageString, Logging)
+End Function
+
 ' Function: AssertObjectStringEquals
 ' Assert that an objcts toString() function returns a specific value.
 '
