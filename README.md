@@ -79,7 +79,7 @@ This library contains several assertion functions. These differ from the native 
  * AssertEquals() - Verify that parameters equal one another. They may have a different type. 
        - TODO: Match arrays. How to handle objects? introspection on public properties?
  * AssertNotEquals()
- * AssertObjectStringEquals() - Attempts to call a method named .ToString() and compares the results to the provided string.
+ * AssertObjectStringEquals() - Attempts to call a method named `.ToString()` and compares the results to the provided string.
 
 To Be Implemented
  * AssertSame() - Assert that the parameters match value and type. Objects are the same instances.
