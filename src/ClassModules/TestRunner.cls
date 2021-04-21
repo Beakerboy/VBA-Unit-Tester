@@ -27,13 +27,15 @@ Public Sub TestCase(ByVal clsObj As iTestCase)
     ' get the list of all test methods
     List = clsObj.GetAllTests()
     Dim parObj As Object
-    Dim Method As Variant
+    Dim Item As Variant
     Set parObj = clsObj.GetObject()
 
-    For Each Method In List
+    For Each Item In List
+        Dim Method As String
+        Method = Item
         ' Run the test
         RunTest parObj, Method
-    Next Method
+    Next Item
 End Sub
 
 ' Function: TestAllCases
@@ -49,10 +51,32 @@ End Sub
 
 ' Function: RunTest
 ' Run a test
-Public Sub RunTest(clsObj, Test)
+Public Sub RunTest(clsObj, Test As String)
     CallByName clsObj, "iTestCase_Setup", VbMethod
     ' Tell the logger what test we are running
     TestReporter.LogTest TypeName(clsObj), Test
-    Call CallByName(clsObj, Test, VbMethod)
+
+    'If the test case has a data provider, fetch the data array and run the test multiple times
+    If EndsWith(Test, "ProviderTest") Then
+        DataList = CallByName(clsObj, Test & "_Data", VbMethod)
+        Dim Message As String
+        Dim Inputs As Variant
+        Dim Expected As Variant
+        Dim Data As Variant
+        For Each Data In DataList
+            Inputs = Data(0)
+            Message = Data(2)
+            Expected = Data(1)
+            Call CallByName(clsObj, Test, VbMethod, Inputs, Expected, Message)
+        Next Data
+    Else
+        Call CallByName(clsObj, Test, VbMethod)
+    End If
     CallByName clsObj, "iTestCase_TearDown", VbMethod
 End Sub
+
+Private Function EndsWith(str As String, ending As String) As Boolean
+    Dim endingLen As Integer
+    endingLen = Len(ending)
+    EndsWith = (Right(Trim(UCase(str)), endingLen) = UCase(ending))
+End Function
