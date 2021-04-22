@@ -32,8 +32,22 @@ Dim sTest As String
 Dim bOutputFailures As Boolean
 Dim PassFail As String
 
+Dim bExpectException As Boolean
+
 Public Property Let OutputFailure(OutputFailures As Boolean)
     bOutputFailures = OutputFailures
+End Property
+
+Public Property Get OutputFailure() As Boolean
+    OutputFailure = bOutputFailures
+End Property
+
+Public Property Let ExpectException(ExpectExceptions As Boolean)
+    bExpectException = ExpectExceptions
+End Property
+
+Public Property Get ExpectException() As Boolean
+    ExpectException = bExpectException
 End Property
 
 ' Constructor: Class_Initialize
@@ -45,7 +59,24 @@ Private Sub Class_Initialize()
     TotalFailingTests = 0
     sMessage = ""
     Set colLog = New Collection
+    bExpectException = False
 End Sub
+
+Public Function GetCurrentTestStatus()
+    GetCurrentTestStatus = Array(sTestCase, sTest, PassFail, sMessage)
+End Function
+
+' Function: ForceToPassing
+' Clear any errors on the current test. You should never call this.
+Public Function ForceTestToPassing()
+    PassFail = "Passing"
+    sMessage = ""
+    FailingTests = FailingTests - 1
+    TotalFailingTests = TotalFailingTests - 1
+    If FailingTests = 0 Then
+        FailingCase = FailingCase - 1
+    End If
+End Function
 
 Public Sub ResultsMsgBox()
     FinalizeLog
@@ -70,6 +101,10 @@ Public Sub LogFailure(Optional Message = "")
     End If
 End Sub
 
+Public Sub LogError(Optional Message = "")
+    If Not bExpectException Then LogFailure Message
+End Sub
+
 Public Sub ResetCounters()
     Passing = 0
     FailingCase = 0
@@ -77,6 +112,7 @@ Public Sub ResetCounters()
     TotalFailingTests = 0
     Assertions = 0
     Set colLog = New Collection
+    bExpectException = False
 End Sub
 
 Public Sub LogTest(TestCase, TestName)

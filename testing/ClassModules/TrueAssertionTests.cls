@@ -22,7 +22,7 @@ End Sub
 ' Function: iTestCase_GetAllTests
 ' A list of every test in this test case
 Function iTestCase_GetAllTests()
-    iTestCase_GetAllTests = Array("AssertTrueTest", "AssertFalseTest", "AssertEqualsProviderTest", "AssertNotEqualsProviderTest")
+    iTestCase_GetAllTests = Array("AssertTrueTest", "AssertFalseTest", "AssertEqualsProviderTest", "AssertNotEqualsProviderTest", "AssertSameProviderTest")
 End Function
 
 ' Function: iTestCase_GetObject
@@ -60,6 +60,7 @@ End Sub
 Function AssertEqualsProviderTest_Data()
     AssertEqualsProviderTest_Data = Array( _
         Array(1, 1, "Expecting True when AssertEquals is given equal integers"), _
+        Array(1, 1#, "Expecting True when AssertEquals is given an integer and a float"), _
         Array("one", "one", "Expecting True when AssertEquals is given equal strings"), _
         Array(1.15, 1.15, "Expecting True when AssertEquals is given equal floats") _
     )
@@ -72,5 +73,21 @@ Function AssertNotEqualsProviderTest_Data()
         Array(1, 2, "Expecting True when AssertNotEquals is given unequal integers"), _
         Array("one", "One", "Expecting True when AssertNotEquals is given unequal strings"), _
         Array(1.15, 1.16, "Expecting True when AssertNotEquals is given unequal floats") _
+    )
+End Function
+
+' Function: AssertEqualsProviderTest(
+' Test that AssertEquals() returns true appropriately
+Sub AssertSameProviderTest(Inputs, Expected, Message As String)
+    Foo = AssertTrue(AssertSame(Inputs, Expected, "", False), Message)
+End Sub
+
+' Function: AssertEqualsProviderTest_Data
+' Test data for AssertEqualsProviderTest()
+Function AssertSameProviderTest_Data()
+    AssertSameProviderTest_Data = Array( _
+        Array(1, 1, "Expecting True when AssertEquals is given equal integers"), _
+        Array("one", "one", "Expecting True when AssertEquals is given equal strings"), _
+        Array(1.15, 1.15, "Expecting True when AssertEquals is given equal floats") _
     )
 End Function

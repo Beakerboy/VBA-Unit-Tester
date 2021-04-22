@@ -53,24 +53,51 @@ End Sub
 ' Run a test
 Public Sub RunTest(clsObj, Test As String)
     CallByName clsObj, "iTestCase_Setup", VbMethod
-    ' Tell the logger what test we are running
-    TestReporter.LogTest TypeName(clsObj), Test
 
-    'If the test case has a data provider, fetch the data array and run the test multiple times
+    'If the test cas a data provider, fetch the data array and run the test multiple times
     If EndsWith(Test, "ProviderTest") Then
+        Dim i As Integer
+        i = 1
+        
         DataList = CallByName(clsObj, Test & "_Data", VbMethod)
         Dim Message As String
         Dim Inputs As Variant
         Dim Expected As Variant
-        Dim Data As Variant
         For Each Data In DataList
+            ' Tell the logger what test we are running and which data set
+            TestReporter.LogTest TypeName(clsObj), Test & " (" & i & ")"
+            i = i + 1
             Inputs = Data(0)
             Message = Data(2)
             Expected = Data(1)
-            Call CallByName(clsObj, Test, VbMethod, Inputs, Expected, Message)
+
+            ' Catch any runtime errors produced within the test
+            On Error Resume Next
+            CallByName clsObj, Test, VbMethod, Inputs, Expected, Message
+            If Err.Number <> 0 Then
+                ' If a runtime error occured, log it and continue
+                TestReporter.LogError Err.Number & " - " & Err.Description
+                Err.Clear
+            End If
+            'Return to default error handling
+            TestReporter.ExpectException = False
+            On Error GoTo 0
         Next Data
     Else
-        Call CallByName(clsObj, Test, VbMethod)
+        ' Tell the logger what test we are running
+        TestReporter.LogTest TypeName(clsObj), Test
+        ' Catch any runtime errors produced within the test
+        On Error Resume Next
+        CallByName clsObj, Test, VbMethod
+        If Err.Number <> 0 Then
+            ' If a runtime error occured, log it and continue
+            TestReporter.LogError Err.Number & " - " & Err.Description
+            Err.Clear
+        End If
+        'Return to default error handling
+        TestReporter.ExpectException = False
+        On Error GoTo 0
+
     End If
     CallByName clsObj, "iTestCase_TearDown", VbMethod
 End Sub

@@ -18,7 +18,7 @@ Sub iTestCase_TearDown()
 End Sub
 
 Function iTestCase_GetAllTests()
-    iTestCase_GetAllTests = Array("FailingAssertionTests", "AssertEqualsProviderTest", "AssertNotEqualsProviderTest")
+    iTestCase_GetAllTests = Array("FailingAssertionTests", "AssertEqualsProviderTest", "AssertNotEqualsProviderTest", "AssertSameProviderTest")
 End Function
 
 Function iTestCase_GetObject()
@@ -61,5 +61,22 @@ Function AssertNotEqualsProviderTest_Data()
         Array(1, 1, "Expecting False when AssertNotEquals is given equal integers"), _
         Array("one", "one", "Expecting False when AssertNotEquals is given uequal strings"), _
         Array(1.15, 1.15, "Expecting False when AssertNotEquals is given uequal floats") _
+    )
+End Function
+
+' Function: AssertEqualsProviderTest(
+' Test that AssertEquals() returns false appropriately
+Sub AssertSameProviderTest(Inputs, Expected, Message As String)
+    Foo = AssertFalse(AssertSame(Inputs, Expected, "", False), Message)
+End Sub
+
+' Function: AssertEqualsProviderTest_Data
+' Test data for AssertEqualsProviderTest()
+Function AssertSameProviderTest_Data()
+    AssertSameProviderTest_Data = Array( _
+        Array(1, 1#, "Expecting False when AssertSame is given a float and an integer"), _
+        Array(1, 2, "Expecting False when AssertEquals is given unequal integers"), _
+        Array("one", "One", "Expecting False when AssertEquals is given unequal strings"), _
+        Array(1.15, 1.16, "Expecting False when AssertEquals is given unequal floats") _
     )
 End Function
