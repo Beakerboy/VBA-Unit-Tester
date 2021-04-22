@@ -25,6 +25,7 @@ Create a module with a publicly visible function that calls the TestRunner with 
 
 Projects that use this code
 -----
+ * [VBA-Math-Objects](https://github.com/Beakerboy/VBA-Math-Objects)
  * [VBA-SQL-Library](https://github.com/Beakerboy/VBA-SQL-Library)
 
  Usage
