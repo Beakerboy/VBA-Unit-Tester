@@ -81,4 +81,5 @@ This library contains several assertion functions. These differ from the native 
  * AssertNotEquals()
  * AssertObjectStringEquals() - Attempts to call a method named `.ToString()` and compares the results to the provided string.
  * AssertSame() - Assert that the parameters match value and type. ToDo: check that Objects are the same instances.
+ * ExpectError() - If you would like to test that a given set of inputs will trigger an error, place a call to `EpectError()` immediately preceeding the call in the test. No code after the error-producing call will execute, so make that the last call of the test function.
 
