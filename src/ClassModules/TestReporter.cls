@@ -89,15 +89,17 @@ Public Sub LogAssertion()
 End Sub
 
 Public Sub LogFailure(Optional Message = "")
-    If FailingTests = 0 Then
-        FailingCase = FailingCase + 1
-    End If
-    FailingTests = FailingTests + 1
-    TotalFailingTests = TotalFailingTests + 1
-    sMessage = Message
-    PassFail = "Failing"
-    If bOutputFailures Then
-        MsgBox sTestCase & vbNewLine & sTest & vbNewLine & sMessage
+    If PassFail = "Passing" Then
+        If FailingTests = 0 Then
+            FailingCase = FailingCase + 1
+        End If
+        FailingTests = FailingTests + 1
+        TotalFailingTests = TotalFailingTests + 1
+        sMessage = Message
+        PassFail = "Failing"
+        If bOutputFailures Then
+            MsgBox sTestCase & vbNewLine & sTest & vbNewLine & sMessage
+        End If
     End If
 End Sub
 
