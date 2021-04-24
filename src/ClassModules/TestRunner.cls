@@ -18,7 +18,10 @@ End Property
 ' Constructor: Class_Initialize
 ' Initialize class members
 Private Sub Class_Initialize()
-   TestReporter.ResetCounters
+End Sub
+
+Public Sub Initialize()
+    TestReporter.ResetCounters
 End Sub
 
 ' Function: TestCase
@@ -79,8 +82,7 @@ Public Sub RunTest(clsObj, Test As String)
                 TestReporter.LogError Err.Number & " - " & Err.Description
                 Err.Clear
             End If
-            'Return to default error handling
-            TestReporter.ExpectException = False
+            TestReporter.FinalizeTest
             On Error GoTo 0
         Next Data
     Else
@@ -94,8 +96,7 @@ Public Sub RunTest(clsObj, Test As String)
             TestReporter.LogError Err.Number & " - " & Err.Description
             Err.Clear
         End If
-        'Return to default error handling
-        TestReporter.ExpectException = False
+        TestReporter.FinalizeTest
         On Error GoTo 0
 
     End If

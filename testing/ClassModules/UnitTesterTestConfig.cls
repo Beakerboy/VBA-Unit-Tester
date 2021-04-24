@@ -25,7 +25,7 @@ Public Property Get iTestableProject_GetOutputFailures()
 End Property
 
 Public Function iTestableProject_GetTestCases()
-    iTestableProject_GetTestCases = Array(New ExceptionCausingTests, New FalseAssertionTests, New LoggerErrorHandlingTests, New MultiFailAssertTests, New NoErrorOccurredTests, New TrueAssertionTests)
+    iTestableProject_GetTestCases = Array(New ExceptionCausingTests, New FalseAssertionTests, New LoggerErrorHandlingTests, New MultiFailAssertTests, New NoAssertionTests, New NoErrorOccurredTests, New TrueAssertionTests)
 End Function
 
 ' Function: Run
@@ -54,4 +54,3 @@ Private Sub Report()
     ' We also want to see a list of all the failures
     TestReporter.PrintFailureLog
 End Sub
-

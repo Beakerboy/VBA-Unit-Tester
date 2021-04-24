@@ -3,21 +3,21 @@ Implements iTestCase
 Dim Foo As Variant
 
 Sub iTestCase_Setup()
-
+    Dim TesterRunner As TestRunner
+    Set TestRunner = CreateTestRunnerNoInit()
+    
+    Set TestRunner.TestConfig = New NoOutputConfig
+    TestRunner.RunTest New PostLogTests, "TwoFailingAssertSetupTest"
 End Sub
 
 Sub iTestCase_TearDown()
-    TestReporter.OutputFailure = bOutputFailure
-    Status = TestReporter.GetCurrentTestStatus
-    Message = Status(3)
-    TestReporter.ForceTestToPassing
-    AssertEquals Message, "First Failure", "The logger should latch onto the first failure. Message seen: " & Message
+
 End Sub
 
 ' Function: iTestCase_GetAllTests
 ' A list of every test in this test case
 Function iTestCase_GetAllTests()
-    iTestCase_GetAllTests = Array("ErrorLoggedTest")
+    iTestCase_GetAllTests = Array("MultipleAssertsTest")
 End Function
 
 ' Function: iTestCase_GetObject
@@ -26,9 +26,11 @@ Function iTestCase_GetObject()
     Set iTestCase_GetObject = New MultiFailAssertTests
 End Function
 
-' Function: ErrorLoggedTest
-' Ensure that when a runtime error is generated, the logger catches it and loggs the test as failed.
-Sub ErrorLoggedTest()
-    AssertTrue False, "First Failure"
-    AssertTrue False, "Second Failure"
+' Function: MultipleAssertsTest
+' When a function has multiple assertions that fail, only report the first.
+Sub MultipleAssertsTest()
+    Status = TestReporter.GetLastTestStatus
+    Message = Status(3)
+    TestReporter.RemoveLastTest
+    AssertEquals Message, "First Failure", "The logger should latch onto the first failure. Message seen: " & Message
 End Sub
