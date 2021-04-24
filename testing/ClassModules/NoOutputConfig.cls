@@ -1,4 +1,12 @@
-Implements iTestableProject
+VERSION 1.0 CLASS
+BEGIN
+  MultiUse = -1  'True
+END
+Attribute VB_Name = "NoOutputConfig"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = False
+Attribute VB_Exposed = FalseImplements iTestableProject
 
 Dim bOutputFailures As Boolean
 
