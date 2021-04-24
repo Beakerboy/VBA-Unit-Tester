@@ -7,7 +7,6 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = FalseImplements iTestableProject
-
 Dim bOutputFailures As Boolean
 
 Dim TestRunner As TestRunner
