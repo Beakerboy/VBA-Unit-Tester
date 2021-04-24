@@ -7,19 +7,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = True
-' Count of passing Test Cases
-Dim Passing As Integer
-
-'Count of failing Test Cases
-Dim FailingCase As Integer
-
-' Count of Failing Tests for the current TestCase
-Dim FailingTests As Integer
-
-' Count of the Total Failing Tests
-Dim TotalFailingTests As Integer
-
-' Count of Assertions
+'Assertions made in the current test
 Dim Assertions As Integer
 
 Dim colLog As Collection
@@ -27,9 +15,11 @@ Dim colLog As Collection
 Dim sMessage As String
 
 Dim sTestCase As String
+
 Dim sTest As String
 
 Dim bOutputFailures As Boolean
+
 Dim PassFail As String
 
 Dim bExpectException As Boolean
@@ -44,6 +34,7 @@ End Property
 
 Public Property Let ExpectException(ExpectExceptions As Boolean)
     bExpectException = ExpectExceptions
+    Assertions = Assertions + 1
 End Property
 
 Public Property Get ExpectException() As Boolean
@@ -54,47 +45,57 @@ End Property
 ' Initialize class members
 Private Sub Class_Initialize()
     ResetCounters
-    PassFail = "Passing"
-    FailingTests = 0
-    TotalFailingTests = 0
-    sMessage = ""
-    Set colLog = New Collection
-    bExpectException = False
 End Sub
 
 Public Function GetCurrentTestStatus()
-    GetCurrentTestStatus = Array(sTestCase, sTest, PassFail, sMessage)
+    GetCurrentTestStatus = Array(sTestCase, sTest, PassFail, sMessage, Assertions)
 End Function
 
-' Function: ForceToPassing
-' Clear any errors on the current test. You should never call this.
-Public Function ForceTestToPassing()
-    PassFail = "Passing"
-    sMessage = ""
-    FailingTests = FailingTests - 1
-    TotalFailingTests = TotalFailingTests - 1
-    If FailingTests = 0 Then
-        FailingCase = FailingCase - 1
+Public Function GetLastTestStatus()
+    LastTestNumber = colLog.Count
+    GetLastTestStatus = colLog.Item(LastTestNumber)
+End Function
+
+Public Function FinalizeTest()
+    If sTest <> "" Then
+        If Assertions = 0 And PassFail = "Passing" Then
+            LogFailure "Test made no assertions."
+        End If
+        If ExpectException And PassFail = "Passing" Then
+            LogFailure "Expected Exception but none occurred"
+            ExpectException = False
+        End If
+        ' Write everything to the collection and clear the counts from the previous test
+        colLog.Add Array(sTestCase, sTest, PassFail, sMessage, Assertions)
     End If
 End Function
 
+Public Sub RemoveLastTest()
+    LastTestNumber = colLog.Count
+    colLog.Remove LastTestNumber
+End Sub
+
 Public Sub ResultsMsgBox()
-    FinalizeLog
-    Total = Passing + FailingCase
-    MsgBox "Results" & vbNewLine & "Cases Run: " & Total & vbNewLine & "Failing: " & FailingCase & vbNewLine & vbNewLine & "Total Tests: " & colLog.Count & vbNewLine & "Failing: " & TotalFailingTests & vbNewLine & vbNewLine & "Assertions: " & Assertions
+Dim TotalFailingTests As Integer
+Dim TotalAssertions As Integer
+TotalFailingTests = 0
+TotalAssertions = 0
+    For Each Test In colLog
+        If Test(2) = "Failing" Then
+            TotalFailingTests = TotalFailingTests + 1
+        End If
+        TotalAssertions = TotalAssertions + Test(4)
+    Next Test
+    MsgBox "Results" & vbNewLine & "Cases Run: " & Total & vbNewLine & "Failing: " & FailingCase & vbNewLine & vbNewLine & "Total Tests: " & colLog.Count & vbNewLine & "Failing: " & TotalFailingTests & vbNewLine & vbNewLine & "Assertions: " & TotalAssertions
 End Sub
 
 Public Sub LogAssertion()
+    TotalAssertions = TotalAssertions + 1
     Assertions = Assertions + 1
 End Sub
 
 Public Sub LogFailure(Optional Message = "")
     If PassFail = "Passing" Then
-        If FailingTests = 0 Then
-            FailingCase = FailingCase + 1
-        End If
-        FailingTests = FailingTests + 1
-        TotalFailingTests = TotalFailingTests + 1
         sMessage = Message
         PassFail = "Failing"
         If bOutputFailures Then
@@ -104,50 +105,37 @@ Public Sub LogFailure(Optional Message = "")
 End Sub
 
 Public Sub LogError(Optional Message = "")
-    If Not bExpectException Then LogFailure Message
+    If Not bExpectException Then
+        LogFailure Message
+    Else
+        LogAssertion
+        bExpectException = False
+    End If
 End Sub
 
 Public Sub ResetCounters()
-    Passing = 0
-    FailingCase = 0
-    FailingTests = 0
-    TotalFailingTests = 0
     Assertions = 0
     Set colLog = New Collection
     bExpectException = False
+    PassFail = "Passing"
+    sMessage = ""
 End Sub
 
 Public Sub LogTest(TestCase, TestName)
-    If sTest <> "" Then
-        ' Write everything to the collection and clear the counts from the previous test
-        colLog.Add Array(sTestCase, sTest, PassFail, sMessage)
-    End If
-    If TestCase <> sTestCase And sTestCase <> "" Then
-        If FailingTests = 0 Then
-            Passing = Passing + 1
-        Else
-            FailingTests = 0
-        End If
-    End If
     sTestCase = TestCase
     sTest = TestName
     sMessage = ""
     PassFail = "Passing"
+    bExpectException = False
+    Assertions = 0
 End Sub
 
 Public Function PrintLog()
-    If sTest <> "" Then
-        ' Write everything to the collection because we are done
-        colLog.Add Array(sTestCase, sTest, PassFail, sMessage)
-    End If
     sTestCase = ""
     sTest = ""
     sMessage = ""
     PassFail = "Passing"
-    
-    If FailingTests = 0 Then
-        Passing = Passing + 1
-    End If
+    bExpectException = False
     msg = ""
     For Each Test In colLog
         msg = msg & Test(0) & " " & Test(1) & " " & Test(2) & " " & Test(3) & vbNewLine
@@ -155,22 +143,7 @@ Public Function PrintLog()
     MsgBox msg
 End Function
 
-Private Sub FinalizeLog()
-    If sTest <> "" Then
-        ' Write everything to the collection because we are done
-        colLog.Add Array(sTestCase, sTest, PassFail, sMessage)
-    End If
-    sTestCase = ""
-    sTest = ""
-    sMessage = ""
-    PassFail = "Passing"
-    If FailingTests = 0 Then
-        Passing = Passing + 1
-    End If
-End Sub
-
 Public Function PrintFailureLog()
-    FinalizeLog
     msg = ""
     For Each Test In colLog
         If Test(2) = "Failing" Then
