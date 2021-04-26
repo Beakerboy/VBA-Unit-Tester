@@ -22,15 +22,6 @@ Public Sub TearDown()
 
 End Sub
 
-' Function: GetAllTests
-' Get a list of all functions in the class that perfom an assertion
-'
-' Returns:
-'   An array of function names as strings.
-Public Function GetAllTests()
-
-End Function
-
 Public Function GetObject()
 
 End Function
