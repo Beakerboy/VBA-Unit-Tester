@@ -52,7 +52,8 @@ A Test Case is a collection of tests, each of which share a common set up. The e
  * SetUp() - This function is run before every test in this test case.
  * TearDown() - This function is run after every test in the test case. 
        - TODO: Match arrays. How to handle objects? introspection on public properties?
- * GetObject() - Return a copy of self. This is to grant access to the custom test functions. 
+ * RunAllTests() - Run all tests in the test case. For ease of use, call the parent `TestCase.RunAllTests Me`
+ * RunTest() - Run a specific test within this test case. For ease of use, call the parent `TestCase.RunTest Test, Me`
 
 There are two types of tests that can be written. A basic test runs without any input parameteres. If you wish to run a test multiple times with different parameters, indicate this by ensuring the function name ends with "ProviderTest", and create another function with the same name and append "\_Data" to it.
 For example:
