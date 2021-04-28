@@ -11,6 +11,14 @@ Implements iTestCase
 
 Dim Foo As Variant
 
+Dim TestCase As iTestCase
+
+' Constructor: Class_Initialize
+' Initialize class members
+Private Sub Class_Initialize()
+    Set TestCase = CreateTestCase()
+End Sub
+
 Sub iTestCase_Setup()
 
 End Sub
@@ -18,12 +26,6 @@ End Sub
 Sub iTestCase_TearDown()
 
 End Sub
-
-' Function: iTestCase_GetAllTests
-' A list of every test in this test case
-Function iTestCase_GetAllTests()
-    iTestCase_GetAllTests = Array("AssertTrueTest", "AssertFalseTest", "AssertEqualsProviderTest", "AssertNotEqualsProviderTest", "AssertSameProviderTest")
-End Function
 
 ' Function: iTestCase_GetObject
 ' Returns this object
@@ -91,3 +93,15 @@ Function AssertSameProviderTest_Data()
         Array(1.15, 1.15, "Expecting True when AssertEquals is given equal floats") _
     )
 End Function
+
+' Sub: iTestCase_RunTest
+' Run a specific test.
+Public Sub iTestCase_RunTest(Test As String, Optional clsObj = Nothing)
+    TestCase.RunTest Test, Me
+End Sub
+
+' Sub: iTestCase_RunAllTests
+' Run all tests.
+Public Sub iTestCase_RunAllTests(Optional ByVal clsObj = Nothing)
+    TestCase.RunAllTests Me
+End Sub
