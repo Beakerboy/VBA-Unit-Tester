@@ -9,24 +9,38 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Implements iTestCase
 
-Dim Foo As Variant
+Dim TestCase As iTestCase
+
+' Constructor: Class_Initialize
+' Initialize class members
+Private Sub Class_Initialize()
+    Set TestCase = CreateTestCase()
+End Sub
 
 Sub iTestCase_Setup()
 
 End Sub
 
 Sub iTestCase_TearDown()
-
 End Sub
 
-Function iTestCase_GetAllTests()
-    iTestCase_GetAllTests = Array("MyFirstTest")
+' Function: iTestCase_GetObject
+' Returns this object
+Function iTestCase_GetObject()
+    Set iTestCase_GetObject = New NoAssertionTests
 End Function
 
-Function iTestCase_GetObject()
-    ' Ensure this is a copy of "self"
-    Set iTestCase_GetObject = New TestCaseStub
-End Function
+' Sub: iTestCase_RunTest
+' Run a specific test.
+Public Sub iTestCase_RunTest(Test As String, Optional clsObj = Nothing)
+    TestCase.RunTest Test, Me
+End Sub
+
+' Sub: iTestCase_RunAllTests
+' Run all tests.
+Public Sub iTestCase_RunAllTests(Optional ByVal clsObj = Nothing)
+    TestCase.RunAllTests Me
+End Sub
 
 Sub MyFirstTest()
     AssertTrue(2 = 1 + 1, "AssertTrue that one plus one equals two")
