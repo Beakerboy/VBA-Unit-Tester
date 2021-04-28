@@ -9,6 +9,14 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Implements iTestCase
 
+Dim TestCase As iTestCase
+
+' Constructor: Class_Initialize
+' Initialize class members
+Private Sub Class_Initialize()
+    Set TestCase = CreateTestCase()
+End Sub
+
 Sub iTestCase_Setup()
    
 End Sub
@@ -17,15 +25,11 @@ Sub iTestCase_TearDown()
    
 End Sub
 
-Function iTestCase_GetAllTests()
-    iTestCase_GetAllTests = Array("FailingAssertionTests", "AssertEqualsProviderTest", "AssertNotEqualsProviderTest", "AssertSameProviderTest")
-End Function
-
 Function iTestCase_GetObject()
     Set iTestCase_GetObject = New FalseAssertionTests
 End Function
 
-Sub FailingAssertionTests()
+Sub FailingAssertionTest()
     Dim Foo As Variant
     ' Test that assertions evaluate to false appropriately
     Foo = AssertFalse(AssertTrue(False, "", False), "Testing boolean False literal")
@@ -80,3 +84,15 @@ Function AssertSameProviderTest_Data()
         Array(1.15, 1.16, "Expecting False when AssertEquals is given unequal floats") _
     )
 End Function
+
+' Sub: iTestCase_RunTest
+' Run a specific test.
+Public Sub iTestCase_RunTest(Test As String, Optional clsObj = Nothing)
+    TestCase.RunTest Test, Me
+End Sub
+
+' Sub: iTestCase_RunAllTests
+' Run all tests.
+Public Sub iTestCase_RunAllTests(Optional ByVal clsObj = Nothing)
+    TestCase.RunAllTests Me
+End Sub
