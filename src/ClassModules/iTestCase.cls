@@ -9,19 +9,18 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 ' Interface: iTestCase
 '
-
-' Function: Setup
-' Set up the environment for every test in the test case
 Public Sub Setup()
 
 End Sub
 
-' Function: TearDown
-' Restore the test environment after the test has been run.
 Public Sub TearDown()
 
 End Sub
 
-Public Function GetObject()
+Public Sub RunTest(test As String, Optional clsObj = Nothing)
 
-End Function
+End Sub
+
+Public Sub RunAllTests(Optional ByVal clsObj = Nothing)
+
+End Sub

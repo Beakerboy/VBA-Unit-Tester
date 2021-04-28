@@ -9,14 +9,20 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Implements iTestCase
 
-Dim Foo As Variant
+Dim TestCase As iTestCase
+
+' Constructor: Class_Initialize
+' Initialize class members
+Private Sub Class_Initialize()
+    Set TestCase = CreateTestCase()
+End Sub
 
 Sub iTestCase_Setup()
-
+    TestReporter.OutputFailure = False
 End Sub
 
 Sub iTestCase_TearDown()
-
+    TestReporter.OutputFailure = True
 End Sub
 
 ' Function: iTestCase_GetAllTests
@@ -58,4 +64,16 @@ Sub NoErrorOccuredSetupTest()
     ' Tell the test environment that we expect an error but do not generate one.
     ' We test that the lack of an expected error creates a failed test in TearDown().
     ExpectError
+End Sub
+
+' Sub: iTestCase_RunTest
+' Run a specific test.
+Public Sub iTestCase_RunTest(Test As String, Optional clsObj = Nothing)
+    TestCase.RunTest Test, Me
+End Sub
+
+' Sub: iTestCase_RunAllTests
+' Run all tests.
+Public Sub iTestCase_RunAllTests(Optional ByVal clsObj = Nothing)
+    TestCase.RunAllTests Me
 End Sub

@@ -1,23 +1,21 @@
 Implements iTestCase
 
-Dim Foo As Variant
+Dim TestCase As iTestCase
+
+' Constructor: Class_Initialize
+' Initialize class members
+Private Sub Class_Initialize()
+    Set TestCase = CreateTestCase()
+End Sub
 
 Sub iTestCase_Setup()
-    Dim TesterRunner As TestRunner
-    Set TestRunner = CreateTestRunnerNoInit()
-    
-    Set TestRunner.TestConfig = New NoOutputConfig
-    TestRunner.RunTest New PostLogTests, "NoAssertionMadeSetupTest"
+    Dim SpecialTestCase As iTestCase
+    Set SpecialTestCase = New PostLogTests
+    SpecialTestCase.RunTest "NoAssertionMadeSetupTest"
 End Sub
 
 Sub iTestCase_TearDown()
 End Sub
-
-' Function: iTestCase_GetAllTests
-' A list of every test in this test case
-Function iTestCase_GetAllTests()
-    iTestCase_GetAllTests = Array("NoAssertionMadeTest")
-End Function
 
 ' Function: iTestCase_GetObject
 ' Returns this object
@@ -28,9 +26,20 @@ End Function
 ' Function: NoAssertionMadeTest
 ' Ensure that when a test does not make any assertions, it fails.
 Sub NoAssertionMadeTest()
-    TestReporter.OutputFailure = bOutputFailure
     Status = TestReporter.GetLastTestStatus
     PassFail = Status(2)
     TestReporter.RemoveLastTest
     AssertEquals PassFail, "Failing", "Test should be failing because no assertions are made. Status is " & PassFail
+End Sub
+
+' Sub: iTestCase_RunTest
+' Run a specific test.
+Public Sub iTestCase_RunTest(Test As String, Optional clsObj = Nothing)
+    TestCase.RunTest Test, Me
+End Sub
+
+' Sub: iTestCase_RunAllTests
+' Run all tests.
+Public Sub iTestCase_RunAllTests(Optional ByVal clsObj = Nothing)
+    TestCase.RunAllTests Me
 End Sub
