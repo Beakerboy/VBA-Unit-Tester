@@ -80,12 +80,12 @@ Dim TotalFailingTests As Integer
 Dim TotalAssertions As Integer
 TotalFailingTests = 0
 TotalAssertions = 0
-    For Each Test In colLog
-        If Test(2) = "Failing" Then
+    For Each test In colLog
+        If test(2) = "Failing" Then
             TotalFailingTests = TotalFailingTests + 1
         End If
-        TotalAssertions = TotalAssertions + Test(4)
-    Next Test
+        TotalAssertions = TotalAssertions + test(4)
+    Next test
     MsgBox "Results" & vbNewLine & "Cases Run: " & Total & vbNewLine & "Failing: " & FailingCase & vbNewLine & vbNewLine & "Total Tests: " & colLog.Count & vbNewLine & "Failing: " & TotalFailingTests & vbNewLine & vbNewLine & "Assertions: " & TotalAssertions
 End Sub
 
@@ -137,19 +137,19 @@ Public Function PrintLog()
     PassFail = "Passing"
     bExpectException = False
     msg = ""
-    For Each Test In colLog
-        msg = msg & Test(0) & " " & Test(1) & " " & Test(2) & " " & Test(3) & vbNewLine
-    Next Test
+    For Each test In colLog
+        msg = msg & test(0) & " " & test(1) & " " & test(2) & " " & test(3) & vbNewLine
+    Next test
     MsgBox msg
 End Function
 
 Public Function PrintFailureLog()
     msg = ""
-    For Each Test In colLog
-        If Test(2) = "Failing" Then
-            msg = msg & Test(0) & " " & Test(1) & " " & Test(2) & " " & Test(3) & vbNewLine
+    For Each test In colLog
+        If test(2) = "Failing" Then
+            msg = msg & test(0) & " " & test(1) & " " & test(2) & " " & test(3) & vbNewLine
         End If
-    Next Test
+    Next test
     If msg = "" Then
         msg = "No Failures"
     End If
