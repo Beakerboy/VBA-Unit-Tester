@@ -17,18 +17,18 @@ Private Sub Class_Initialize()
     Set TestCase = CreateTestCase()
 End Sub
 
+' Sub: iTestCase_Setup
+' Add code here that will be run before every test.
+' For example, create objects, populate data.
 Sub iTestCase_Setup()
 
 End Sub
 
+' Sub: iTestCase_Setup
+' Add code here that will be run after every test.
+' For example, remove a worksheet, close a connection.
 Sub iTestCase_TearDown()
 End Sub
-
-' Function: iTestCase_GetObject
-' Returns this object
-Function iTestCase_GetObject()
-    Set iTestCase_GetObject = New NoAssertionTests
-End Function
 
 ' Sub: iTestCase_RunTest
 ' Run a specific test.
@@ -42,6 +42,8 @@ Public Sub iTestCase_RunAllTests(Optional ByVal clsObj = Nothing)
     TestCase.RunAllTests Me
 End Sub
 
+' Sub: MyFirstTest
+' All test subs should end with "Test" and include at least one assertion.
 Sub MyFirstTest()
     AssertTrue(2 = 1 + 1, "AssertTrue that one plus one equals two")
     AssertEquals(1 + 1, 2,  "AssertEquals that one plus one equals two")
