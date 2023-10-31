@@ -1,3 +1,4 @@
+[![Lint VBA](https://github.com/Beakerboy/VBA-Unit-Tester/actions/workflows/lint_vba.yml/badge.svg)](https://github.com/Beakerboy/VBA-Unit-Tester/actions/workflows/lint_vba.yml)
 VBA Unit Tester
 =====================
 
