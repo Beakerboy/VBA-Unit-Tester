@@ -116,7 +116,3 @@ End Function
 Public Sub ExpectError(Optional Code As Integer = 0, Optional Message As String = "")
     TestReporter.ExpectException = True
 End Sub
-
-Public Sub ExpectError(Optional Code As Integer = 0, Optional Message As String = "")
-    TestReporter.ExpectException = True
-End Sub
