@@ -18,7 +18,6 @@ jobs:
         python -m pip install antlr4-tools
         wget https://raw.githubusercontent.com/Beakerboy/grammars-v4/coverage/vba/vba_cc/vba_cc.g4
         antlr4 -Dlanguage=Python3 -o deliverables -listener -visitor vba_cc.g4
-        stubgen ./deliverables -o ./deliverables
         mv deliverables/*.py src/vba_precompiler/grammar
         mv deliverables/*.pyi src/vba_precompiler/grammar
     - name: Precompile
