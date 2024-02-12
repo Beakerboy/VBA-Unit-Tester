@@ -15,6 +15,7 @@ jobs:
     - name: Build Grammar
       run: |
         python -m pip install antlr4-python3-runtime
+        python -m pip install antlr4-tools
         wget https://raw.githubusercontent.com/Beakerboy/grammars-v4/coverage/vba/vba_cc/vba_cc.g4
         antlr4 -Dlanguage=Python3 -o deliverables -listener -visitor vba_cc.g4
         stubgen ./deliverables -o ./deliverables
