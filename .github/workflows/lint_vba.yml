@@ -19,4 +19,4 @@ jobs:
         python -m vba_precompiler ./src
         rm -rf ./src
     - name: Lint
-      uses: Vba-actions/lint-vba@main
+      uses: Vba-actions/lint-vba@dev
