@@ -18,6 +18,5 @@ jobs:
         pip install 'vba_precompiler @ git+https://github.com/Beakerboy/VBA-Precompiler@dev'
         python -m vba_precompiler ./src
         rm -rf ./src
-        cat ./build/Modules/ObjectIntrospection.bas
     - name: Lint
       uses: Vba-actions/lint-vba@dev
