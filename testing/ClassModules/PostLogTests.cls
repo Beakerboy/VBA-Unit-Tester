@@ -34,7 +34,7 @@ End Function
 ' Function: iTestCase_GetObject
 ' Returns this object
 Function iTestCase_GetObject()
-    Set iTestCase_GetObject = New PostLogChecks
+    Set iTestCase_GetObject = New PostLogTests
 End Function
 
 ' Function: ErrorLoggedTest
