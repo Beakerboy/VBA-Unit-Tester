@@ -45,6 +45,6 @@ End Sub
 ' Sub: MyFirstTest
 ' All test subs should end with "Test" and include at least one assertion.
 Sub MyFirstTest()
-    AssertTrue(2 = 1 + 1, "AssertTrue that one plus one equals two")
-    AssertEquals(1 + 1, 2,  "AssertEquals that one plus one equals two")
+    AssertTrue 2 = 1 + 1, "AssertTrue that one plus one equals two"
+    AssertEquals 1 + 1, 2, "AssertEquals that one plus one equals two"
 End Sub

@@ -1,3 +1,4 @@
+Attribute VB_Name = "VBAUnitTesterUnitTests"
 Public Function RunTests()
     
     Dim TestConfig As iTestableProject
